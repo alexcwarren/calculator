@@ -26,6 +26,8 @@ class Calculator_GUIView(tk.Tk, CalculatorView):
         self.width = self.__MINWIDTH
         self.height = self.__MINHEIGHT
         self.geometry(f"{self.width}x{self.height}")
+        self.rowconfigure(1, weight=1)
+        self.columnconfigure(0, weight=1)
         self.__build_menu_bar()
         self.__build_result_window()
         self.__build_button_grid()
@@ -38,10 +40,11 @@ class Calculator_GUIView(tk.Tk, CalculatorView):
 
     def __build_result_window(self):
         self.result_frame = tk.Frame(self)
+        self.result_frame.columnconfigure(0, weight=1)
         self.result_frame.grid(sticky=tk.EW)
         self.result_fontsize = 24
-        self.result_entry = tk.Entry(self.result_frame, width=17, font=self.__get_font(self.result_fontsize), justify=tk.RIGHT)
-        # self.result_entry.config(state = tk.DISABLED)
+        self.result_entry = tk.Entry(self.result_frame, width=17, font=self.__get_font(self.result_fontsize), justify=tk.RIGHT, disabledbackground="white")
+        self.result_entry.config(state = tk.DISABLED)
         self.result_entry.grid(sticky=tk.EW)
 
     def __build_button_grid(self):
@@ -56,11 +59,13 @@ class Calculator_GUIView(tk.Tk, CalculatorView):
             ['.', '0', '=', '/']
         ]
         NUM_COLUMNS = max(len(row) for row in self.button_values)
+        self.__BUTTON_MINWIDTH = 75
+        self.__BUTTON_MINHEIGHT = 50
         for r,row in enumerate(self.button_values):
-            self.button_frame.columnconfigure(r, weight=1, minsize=75)
+            self.button_frame.columnconfigure(r, weight=1, minsize=self.__BUTTON_MINWIDTH)
             row.extend([' '] * (NUM_COLUMNS - len(row)))
             for c,val in enumerate(row):
-                self.button_frame.rowconfigure(c, weight=1, minsize=50)
+                self.button_frame.rowconfigure(c, weight=1, minsize=self.__BUTTON_MINHEIGHT)
                 self.buttons[val] = tk.Button(self.button_frame, text=val, font=self.__get_font(self.button_fontsize))
                 self.buttons[val].grid(row=r, column=c, sticky=tk.NSEW)
     
