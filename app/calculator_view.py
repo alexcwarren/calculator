@@ -1,4 +1,5 @@
 import tkinter as tk
+from functools import partial
 
 
 class CalculatorView:
@@ -66,8 +67,12 @@ class Calculator_GUIView(tk.Tk, CalculatorView):
             row.extend([' '] * (NUM_COLUMNS - len(row)))
             for c,val in enumerate(row):
                 self.button_frame.rowconfigure(c, weight=1, minsize=self.__BUTTON_MINHEIGHT)
-                self.buttons[val] = tk.Button(self.button_frame, text=val, font=self.__get_font(self.button_fontsize))
+                button_command = partial(self.__button_clicked, value=val)
+                self.buttons[val] = tk.Button(self.button_frame, text=val, font=self.__get_font(self.button_fontsize), command=button_command)
                 self.buttons[val].grid(row=r, column=c, sticky=tk.NSEW)
+
+    def __button_clicked(self, value: str):
+        print(value)
     
     def show(self):
         self.mainloop()
