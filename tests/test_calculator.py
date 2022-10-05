@@ -1,11 +1,11 @@
 import pytest
 
-from app.calculator import CalculatorModel
+from app.calculator import Calculator
 
 
 @pytest.fixture
 def calculator():
-    return CalculatorModel()
+    return Calculator().model
 
 
 @pytest.mark.parametrize(

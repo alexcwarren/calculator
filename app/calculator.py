@@ -1,27 +1,10 @@
+from app.calculator_model import CalculatorModel
+
+
 class Calculator:
-    __SIGNIFICANT_DIGITS: int = 14
-
     def __init__(self):
-        pass
+        self.model = CalculatorModel()
 
-    def add(self, operand1: float, operand2: float) -> str:
-        return self.__approximate(operand1 + operand2)
 
-    def subtract(self, operand1: float, operand2: float) -> str:
-        return self.__approximate(operand1 - operand2)
-
-    def multiply(self, operand1: float, operand2: float) -> str:
-        return self.__approximate(operand1 * operand2)
-
-    def divide(self, operand1: float, operand2: float) -> str:
-        if operand2 == 0:
-            return "Cannot divide by 0"
-        return self.__approximate(operand1 / operand2)
-
-    def __approximate(self, number: float) -> str:
-        result: str = str(round(number, Calculator.__SIGNIFICANT_DIGITS))
-        if "." in result:
-            result = result.rstrip("0")
-            if result.endswith("."):
-                result = result[:-1]
-        return result
+if __name__ == '__main__':
+    pass
