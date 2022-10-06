@@ -53,6 +53,7 @@ class Calculator_GUIView(tk.Tk, CalculatorView):
         self.result_frame.grid(sticky=tk.EW)
         self.result_fontsize = 24
         self.result_variable = tk.StringVar()
+        self.result_variable.set(chars.ZERO)
         self.result_entry = tk.Entry(
             self.result_frame,
             width=17,
