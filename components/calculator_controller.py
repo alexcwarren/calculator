@@ -1,5 +1,6 @@
 import components.calculator_model as calcmodel
 import components.calculator_view as calcview
+from components.characters import Character
 
 
 class CalculatorController:
@@ -7,6 +8,6 @@ class CalculatorController:
         self.model = model
         self.view = view
 
-    def character_entered(self, value: str):
+    def character_entered(self, value: Character):
         self.model.result = value
         self.view.update_result(self.model.result)

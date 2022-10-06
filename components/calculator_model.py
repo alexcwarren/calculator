@@ -1,3 +1,6 @@
+import components.characters as chars
+
+
 class CalculatorModel:
     __SIGNIFICANT_DIGITS: int = 14
 
@@ -9,8 +12,9 @@ class CalculatorModel:
         return self.__result
 
     @result.setter
-    def result(self, value: str):
-        self.__result = value
+    def result(self, ch: chars.Character):
+        if isinstance(ch, chars.Number):
+            self.__result += ch.value
 
     def add(self, operand1: float, operand2: float) -> str:
         return self.__approximate(operand1 + operand2)

@@ -2,6 +2,8 @@ import abc
 import tkinter as tk
 from functools import partial
 
+import components.characters as chars
+
 
 class CalculatorView:
     def __init__(self):
@@ -67,34 +69,36 @@ class Calculator_GUIView(tk.Tk, CalculatorView):
         self.button_frame.grid(sticky=tk.NSEW)
         self.button_fontsize = 14
         self.buttons: dict[tk.Button] = dict()
-        self.button_values = [
-            ["%", "CE", "C", "\u2190"],
-            ["7", "8", "9", "*"],
-            ["4", "5", "6", "-"],
-            ["1", "2", "3", "+"],
-            ["+/-", "0", ".", "="],
+        self.button_values: list[list[chars.Character]] = [
+            [chars.PERCENT, chars.CLEAR_ERR, chars.CLEAR, chars.BACKSPACE],
+            [chars.EMPTY, chars.EMPTY, chars.EMPTY, chars.DIVIDE],
+            [chars.SEVEN, chars.EIGHT, chars.NINE, chars.MULTIPLY],
+            [chars.FOUR, chars.FIVE, chars.SIX, chars.SUBTRACT],
+            [chars.ONE, chars.TWO, chars.THREE, chars.ADD],
+            [chars.PLUS_MINUS, chars.ZERO, chars.DECIMAL_POINT, chars.EQUALS],
         ]
         NUM_COLUMNS = max(len(row) for row in self.button_values)
         self.BUTTON_MINWIDTH = 75
         self.BUTTON_MINHEIGHT = 50
         for r, row in enumerate(self.button_values):
             self.button_frame.rowconfigure(r, weight=1, minsize=self.BUTTON_MINHEIGHT)
-            row.extend([" "] * (NUM_COLUMNS - len(row)))
+            row.extend([chars.EMPTY] * (NUM_COLUMNS - len(row)))
             for c, val in enumerate(row):
                 if r == 0:
                     self.button_frame.columnconfigure(
                         c, weight=1, minsize=self.BUTTON_MINWIDTH
                     )
-                button_command = partial(self.button_pressed, value=val)
-                self.buttons[val] = tk.Button(
-                    self.button_frame,
-                    text=val,
-                    font=self.get_font(self.button_fontsize),
-                    command=button_command,
-                )
-                self.buttons[val].grid(row=r, column=c, sticky=tk.NSEW)
+                if val != chars.EMPTY:
+                    button_command = partial(self.button_pressed, value=val)
+                    self.buttons[val] = tk.Button(
+                        self.button_frame,
+                        text=val,
+                        font=self.get_font(self.button_fontsize),
+                        command=button_command,
+                    )
+                    self.buttons[val].grid(row=r, column=c, sticky=tk.NSEW)
 
-    def button_pressed(self, value: str):
+    def button_pressed(self, value: chars.Character):
         self.controller.character_entered(value)
 
     def update_result(self, value: str):
