@@ -2,11 +2,15 @@ class CalculatorModel:
     __SIGNIFICANT_DIGITS: int = 14
 
     def __init__(self):
-        self.__result = None
+        self.__result = ''
     
     @property
     def result(self):
         return self.__result
+    
+    @result.setter
+    def result(self, value: str):
+        self.__result += value
 
     def add(self, operand1: float, operand2: float) -> str:
         return self.__approximate(operand1 + operand2)
