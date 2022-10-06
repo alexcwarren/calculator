@@ -103,11 +103,12 @@ class Calculator_GUIView(tk.Tk, CalculatorView):
     def show(self):
         self.mainloop()
 
+
 class Calculator_MockView(CalculatorView):
     def __init__(self):
         super().__init__()
-        self.__result = ''
-    
+        self.__result = ""
+
     @property
     def result(self):
         return self.__result

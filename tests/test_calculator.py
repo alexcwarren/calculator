@@ -1,7 +1,7 @@
 import pytest
 
-from calculator import Calculator
 import components.calculator_view as calcview
+from calculator import Calculator
 
 
 @pytest.fixture
@@ -45,6 +45,7 @@ def test_multiply(operand1: float, operand2: float, result: str, calculator_app)
 )
 def test_divide(operand1: float, operand2: float, result: str, calculator_app):
     assert calculator_app.model.divide(operand1, operand2) == result
+
 
 @pytest.mark.parametrize("character, result", [("0", "0")])
 def test_character_entered(character: str, result: str, calculator_app):
